@@ -14,11 +14,16 @@ services:
       - CHANNEL_URL=${CHANNEL_URL:-https://t.me/pk_oa}
       - ADMIN_USER_ID=${ADMIN_USER_ID}
       # MySQL配置
-      - MYSQL_HOST=${MYSQL_HOST:-localhost}
+      - MYSQL_HOST=${MYSQL_HOST:-host.docker.internal}
       - MYSQL_PORT=${MYSQL_PORT:-3306}
       - MYSQL_USER=${MYSQL_USER:-tgbot_user}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE:-tgbot_verify}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-tgbot_user}
+      - MYSQL_DB_NAME=${MYSQL_DB_NAME:-${MYSQL_DATABASE:-tgbot_verify}}
+      # 代理（容器内 127.0.0.1 是容器自身，必须指向宿主机的代理；10808 监听在 Docker 网关上，host.docker.internal 可达）
+      - HTTP_PROXY=http://host.docker.internal:10808
+      - HTTPS_PROXY=http://host.docker.internal:10808
+      # 本地地址不走代理：MySQL 经 host.docker.internal 直连宿主
+      - NO_PROXY=host.docker.internal,localhost,127.0.0.1
 
     # 日志持久化
     volumes:

@@ -25,6 +25,7 @@ venv/
 env/
 ENV/
 .venv
+.env
 
 # IDE
 .vscode/
@@ -58,6 +59,7 @@ config_local.py
 
 # Playwright
 .playwright/
+.pw-browsers/
 
 # Testing
 .pytest_cache/
